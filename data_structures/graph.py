@@ -1,4 +1,24 @@
-"""A simple graph object"""
+def build_weighted_vertex_graph(filename):
+    """Constructs a graph such that each vertex, as opposed to each edge, is assigned a weight."""
+    with open('data_structures/{}.txt'.format(filename), 'r') as f:
+        vertices = {}
+        line = f.readline()
+        while line.strip():
+            if line.strip():
+                vertex, weight = line.split()
+                vertices[int(vertex)] = int(weight)
+            line = f.readline()
+
+        edges = []
+        line = f.readline()
+        while line.strip():
+            x, y = line.split()
+            edges.append([int(x), int(y), vertices[int(y)]])
+            edges.append([int(y), int(x), vertices[int(x)]])
+            line = f.readline()
+
+        return Graph(len(vertices), edges, directed=True)
+
 
 class EdgeNode:
     def __init__(self):
@@ -12,27 +32,38 @@ class EdgeNode:
             yield curr
             curr = curr.next
 
+    def __repr__(self):
+        return ', '.join(str(node.y) for node in self)
+
 
 class Graph:
-    def __init__(self, directed):
-        self.edges = None
-        self.degree = None
-        self.nvertices = 0
-        self.nedges = 0
+    """A simple graph object"""
+
+    def __init__(self, nvertices, edges, directed=False):
+        self.degree = [0 for _ in range(nvertices)]
+        self.nvertices = nvertices
         self.directed = directed
+        self.edges = [None for _ in range(nvertices)]
 
-    def read_graph(self, directed, filename):
+        for edge in edges:
+            self.insert_edge(*edge, directed=directed)
+
+    def __repr__(self):
+        edges = []
+        for i in range(self.nvertices):
+            for edge in self.edges[i]:
+                edges.append(('({}, {}, weight={})'.format(i, edge.y, edge.weight)))
+        return '{}([{}])'.format(self.__class__.__name__, ', '.join(edges))
+
+    @classmethod
+    def from_file(cls, filename, directed=False):
         with open('data_structures/{}.txt'.format(filename), 'r') as f:
-            nvertices, nedges = f.readline().split()
-
-            self.nvertices = int(nvertices)
-            self.nedges = int(nedges)
-            self.edges = [None for _ in range(self.nedges)]
-            self.degree = [0 for _ in range(self.nvertices)]
-
-            for _ in range(self.nedges):
-                x, y, weight = f.readline().split()
-                self.insert_edge(int(x), int(y), int(weight), directed)
+            nvertices = int(f.readline())
+            edges = []
+            for line in f.readlines():
+                x, y, weight = line.split()
+                edges.append([int(x), int(y), int(weight)])
+            return cls(nvertices, edges, directed=directed)
 
     def insert_edge(self, x, y, weight=1, directed=False):
         p = EdgeNode()
@@ -44,8 +75,6 @@ class Graph:
 
         if directed is False:
             self.insert_edge(y, x, weight=weight, directed=True)
-        else:
-            self.nedges += 1
 
     def print_graph(self):
         for i in range(self.nvertices):
