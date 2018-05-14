@@ -14,7 +14,9 @@ class AlgorithmsTestCase(unittest.TestCase):
         g = Graph(directed)
         g.read_graph(directed, 'graph_weighted')
         result = dijkstra(g, 0, 7)
-        print(result)
+        self.assertListEqual(result, [0, 1, 7])
+        result = dijkstra(g, 0, 4)
+        self.assertListEqual(result, [0, 1, 7, 4])
 
     def test_prims(self):
         directed = False

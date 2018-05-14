@@ -15,10 +15,10 @@ def dijkstra(G, s, t):
     """
     known = {s}
     dist = [sys.maxsize for _ in range(G.nvertices)]
-    shortest_paths = [[s] for _ in range(G.nvertices)]
+    parents = [None for _ in range(G.nvertices)]
     for edge in G.edges[s]:
         dist[edge.y] = edge.weight
-        shortest_paths[edge.y].append(edge.y)
+        parents[edge.y] = s
     last = s
     while last != t:
         v_next = None
@@ -31,10 +31,17 @@ def dijkstra(G, s, t):
         for edge in G.edges[v_next]:
             if edge.y != s and dist[edge.y] > min_dist + edge.weight:
                 dist[edge.y] = min_dist + edge.weight
-                shortest_paths[edge.y] = shortest_paths[v_next] + [edge.y]
+                parents[edge.y] = v_next
 
         last = v_next
         known.add(v_next)
 
-    return shortest_paths[t]
+    # Walk parents backwards to find shortest path
+    results = [t]
+    curr_parent = parents[t]
+    while curr_parent != s:
+        results.append(curr_parent)
+        curr_parent = parents[curr_parent]
+    results.append(s)
+    return list(reversed(results))
 

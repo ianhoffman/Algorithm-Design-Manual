@@ -1,4 +1,5 @@
 """A simple graph object"""
+
 class EdgeNode:
     def __init__(self):
         self.y = 0
