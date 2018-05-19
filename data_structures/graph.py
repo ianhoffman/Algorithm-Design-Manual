@@ -1,20 +1,5 @@
-from collections import namedtuple
-
-
-Edge = namedtuple('Edge', ['x', 'y', 'weight'])
-
-
-class EdgeNode:
-    def __init__(self, y, weight, next=None):
-        self.y = y
-        self.weight = weight
-        self.next = next
-
-    def __iter__(self):
-        curr = self
-        while curr is not None:
-            yield curr
-            curr = curr.next
+from data_structures import Edge
+from data_structures import EdgeNode
 
 
 class Graph:
