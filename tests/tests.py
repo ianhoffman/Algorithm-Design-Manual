@@ -2,25 +2,32 @@ import random
 import unittest
 
 from algorithms import dijkstra
+from algorithms import kruskal
 from algorithms import prim
 
-from data_structures import build_weighted_vertex_graph
 from data_structures import Graph
 from data_structures import MinHeap
 
 
 class AlgorithmsTestCase(unittest.TestCase):
     def test_dijkstra(self):
-        g = Graph.from_file('graph_weighted')
+        g = Graph.from_file('graph_shortest_path')
         result = dijkstra(g, 0, 7)
         self.assertListEqual(result, [0, 1, 7])
         result = dijkstra(g, 0, 4)
         self.assertListEqual(result, [0, 1, 7, 4])
 
+    def test_kruskal(self):
+        mst_total_weight = 23
+        g = Graph.from_file('graph_MST')
+        result = kruskal(g)
+        self.assertEqual(result, mst_total_weight)
+
     def test_prims(self):
-        g = Graph.from_file('graph_weighted')
-        minimum_spanning_tree = prim(g, 0)
-        self.assertEqual(len(minimum_spanning_tree), g.nvertices)
+        mst_total_weight = 23
+        g = Graph.from_file('graph_MST')
+        result = prim(g, 0)
+        self.assertEqual(result, mst_total_weight)
 
 
 class DataStructuresTestCase(unittest.TestCase):
@@ -37,7 +44,7 @@ class DataStructuresTestCase(unittest.TestCase):
 
 class GraphTestCase(unittest.TestCase):
     def test_weighted_vertices(self):
-        g = build_weighted_vertex_graph('graph_weighted_vertices')
+        g = Graph.from_file_weighted_vertices('graph_weighted_vertices')
         self.assertListEqual(dijkstra(g, 0, 7), [0, 1, 7])
         self.assertListEqual(dijkstra(g, 0, 6), [0, 1, 7, 6])
         self.assertListEqual(dijkstra(g, 0, 2), [0, 3, 2])

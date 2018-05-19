@@ -14,8 +14,8 @@ def dijkstra(G, s, t):
     :rtype: list[int]
     """
     known = {s}
-    dist = [sys.maxsize for _ in range(G.nvertices)]
-    parents = [None for _ in range(G.nvertices)]
+    dist = [sys.maxsize for _ in range(len(G))]
+    parents = [None for _ in range(len(G))]
     for edge in G.edges[s]:
         dist[edge.y] = edge.weight
         parents[edge.y] = s

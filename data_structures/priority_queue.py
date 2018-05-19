@@ -1,17 +1,13 @@
-import abc
 import operator
 
 
-class PriorityQueue(list, abc.ABC):
+class PriorityQueue(list):
     """A simple priority queue implementation."""
-    def __init__(self, seq):
+    def __init__(self, seq, cmp):
         super().__init__(seq)
+        self.cmp = cmp
         for i in range((len(self) // 2) - 1, -1, -1):
             self.bubble_down(i)
-
-    @abc.abstractmethod
-    def cmp(self, i, j):
-        pass
 
     def extract(self):
         top = self[0]
@@ -46,9 +42,11 @@ class PriorityQueue(list, abc.ABC):
 
 
 class MinHeap(PriorityQueue):
-    cmp = operator.le
+    def __init__(self, seq):
+        super().__init__(seq, cmp=operator.lt)
 
 
 class MaxHeap(PriorityQueue):
-    cmp = operator.ge
+    def __init__(self, seq):
+        super().__init__(seq, cmp=operator.gt)
 
