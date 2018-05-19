@@ -3,21 +3,19 @@ import sys
 
 
 def prim(g, start):
-    intree = [False for _ in range(g.nvertices)]
-    distance = [sys.maxsize for _ in range(g.nvertices)]
+    intree = [False for _ in range(len(g))]
+    distance = [sys.maxsize for _ in range(len(g))]
 
     distance[start] = 0
     v = start
     
     while intree[v] is False:
         intree[v] = True
-        p = g.edges[v]
-        while p is not None:
-            w = p.y
-            weight = p.weight
+        for edge in g.edges[v]:
+            w = edge.y
+            weight = edge.weight
             if distance[w] > weight and intree[w] is False:
                 distance[w] = weight
-            p = p.next
 
         v = 1
         dist = sys.maxsize

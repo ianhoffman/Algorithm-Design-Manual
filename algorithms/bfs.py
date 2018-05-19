@@ -1,18 +1,18 @@
 from collections import deque
 
 
-def bfs(G, start):
+def bfs(G, start, is_valid_edge=lambda e: True):
     queue = deque([start])
     discovered = {start}
     parents = {}
+
     while queue:
         curr = queue.popleft()
-        edge = G.edges[curr]
-        while edge:
-            if edge.y not in discovered:
+        for edge in G.edges[curr]:
+            if edge.y not in discovered and is_valid_edge(edge):
                 queue.append(edge.y)
                 discovered.add(edge.y)
                 parents[edge.y] = curr
-            edge = edge.next
+
     return parents
 
