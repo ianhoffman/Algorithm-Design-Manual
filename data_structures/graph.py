@@ -1,6 +1,7 @@
 from abc import ABC
 from abc import abstractmethod
 from collections import defaultdict
+from itertools import chain
 
 
 class BaseEdge:
@@ -74,6 +75,9 @@ class BaseGraph(ABC):
         for edge in edges:
             self.insert_edge(*edge, directed=directed)
 
+    def __iter__(self):
+        yield from self.edges
+
     def __getitem__(self, vertex):
         return self.edges[vertex]
 
@@ -83,16 +87,15 @@ class BaseGraph(ABC):
     def __repr__(self):
         return f'{self.__class__.__name__}({dict(self.edges)})'
 
+    @abstractmethod
+    def insert_edge(self, *args, **kwargs):
+        pass
+
     def find_edge(self, x, y):
         return next((edge for edge in self[x] if edge.y == y), None)
 
     def iter_edges(self):
-        for edge_list in self.edges.values():
-            yield from edge_list
-
-    @abstractmethod
-    def insert_edge(self, *args, **kwargs):
-        pass
+        yield from chain.from_iterable(self.edges.values())
 
 
 class Graph(BaseGraph):

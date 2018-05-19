@@ -2,6 +2,7 @@ import sys
 import unittest
 
 from algorithms import bfs
+from algorithms import bipartite_match
 from algorithms import dijkstra
 from algorithms import floyd
 from algorithms import kruskal
@@ -26,6 +27,11 @@ class GraphTestCase(unittest.TestCase):
                 5: 0
             }
         )
+
+    def test_bipartite_match(self):
+        g = Graph.from_file('graph_netflow_bipartite')
+        result = bipartite_match(g)
+        self.assertEqual(result, 6)  # Six matching are available
 
     def test_dijkstra(self):
         g = Graph.from_file('graph_shortest_path')
