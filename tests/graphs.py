@@ -29,9 +29,20 @@ class GraphTestCase(unittest.TestCase):
         )
 
     def test_bipartite_match(self):
-        g = Graph.from_file('graph_netflow_bipartite')
-        result = bipartite_match(g)
-        self.assertEqual(result, 6)  # Six matching are available
+        R = ResidualFlowGraph.from_file('graph_netflow_bipartite')
+        result = bipartite_match(R)
+        self.assertEqual(result, 6)
+
+        R = ResidualFlowGraph.from_file('graph_netflow_bipartite')
+        R.delete_edge(0, 6)
+        result = bipartite_match(R)
+        self.assertEqual(result, 5)
+
+        R = ResidualFlowGraph.from_file('graph_netflow_bipartite')
+        R.delete_edge(0, 6)
+        R.delete_edge(5, 11)
+        result = bipartite_match(R)
+        self.assertEqual(result, 4)
 
     def test_dijkstra(self):
         g = Graph.from_file('graph_shortest_path')

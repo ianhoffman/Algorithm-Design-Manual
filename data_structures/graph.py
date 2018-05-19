@@ -68,10 +68,8 @@ class BaseGraph(ABC):
             return cls(edges, directed=True)
 
     def __init__(self, edges, directed=False):
-        self.degree = defaultdict(int)
         self.directed = directed
         self.edges = defaultdict(list)
-
         for edge in edges:
             self.insert_edge(*edge, directed=directed)
 
@@ -85,34 +83,36 @@ class BaseGraph(ABC):
         return len(self.edges)
 
     def __repr__(self):
-        return f'{self.__class__.__name__}({dict(self.edges)})'
+        return f'{self.__class__.__name__}(edges={dict(self.edges)}, directed={self.directed})'
+
+    def __setitem__(self, key, value):
+        self.edges[key] = value
+
+    def delete_edge(self, x, y, directed=None):
+        if directed is None:
+            directed = self.directed
+        self[x] = list(filter(lambda e: e.y != y, self[x]))
+        if not directed:
+            self.delete_edge(y, x, directed=True)
+
+    def find_edge(self, x, y):
+        return next((edge for edge in self[x] if edge.y == y), None)
 
     @abstractmethod
     def insert_edge(self, *args, **kwargs):
         pass
-
-    def find_edge(self, x, y):
-        return next((edge for edge in self[x] if edge.y == y), None)
 
     def iter_edges(self):
         yield from chain.from_iterable(self.edges.values())
 
 
 class Graph(BaseGraph):
-    """A simple graph object"""
     def insert_edge(self, x, y, weight=1, directed=False):
         p = Edge(x, y, weight)
         self.edges[x].append(p)
-        self.degree[x] += 1
 
         if directed is False:
             self.insert_edge(p.y, x, weight=p.weight, directed=True)
-
-    def to_residual_flow_graph(self):
-        """
-        :rtype: ResidualFlowGraph
-        """
-        return ResidualFlowGraph([[e.x, e.y, e.weight] for e in self.iter_edges()], directed=False)
 
 
 class ResidualFlowGraph(BaseGraph):
@@ -122,7 +122,6 @@ class ResidualFlowGraph(BaseGraph):
 
         p = NetFlowEdge(x, y, capacity, 0, residual)
         self.edges[x].append(p)
-        self.degree[x] += 1
 
         if directed is False:
             self.insert_edge(p.y, x, p.capacity, directed=True, residual=0)
