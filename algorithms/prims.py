@@ -12,26 +12,24 @@ def prim(g, start):
     :return: the total weight of the MST
     :rtype: int
     """
-    intree = [False for _ in range(len(g))]
-    distance = [sys.maxsize for _ in range(len(g))]
-
-    distance[start] = 0
+    in_tree = set()
+    distance = {start: 0}
     v = start
     
-    while intree[v] is False:
-        intree[v] = True
+    while v not in in_tree:
+        in_tree.add(v)
         for edge in g.edges[v]:
-            w = edge.y
+            y = edge.y
             weight = edge.weight
-            if distance[w] > weight and intree[w] is False:
-                distance[w] = weight
+            if distance.get(y, sys.maxsize) > weight and y not in in_tree:
+                distance[y] = weight
 
         v = 1
         dist = sys.maxsize
         for i in range(len(g)):
-            if intree[i] is False and dist > distance[i]:
+            if i not in in_tree and dist > distance.get(i, sys.maxsize):
                 dist = distance[i]
                 v = i
 
-    return sum(distance)
+    return sum(distance.values())
 
