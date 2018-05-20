@@ -1,5 +1,12 @@
 def floyd(adjacency_matrix):
-    """Non-optimized implementation of floyd's algorithm for finding all-pairs shorts paths in O(n ^ 3) time."""
+    """Non-vectorized implementation of Floyd's algorithm for finding all shortest paths between vertices in a graph.
+
+    :param adjacency_matrix: a 2-dimensional matrix in which the distance between vertices i, j is represented by
+        adjacency_matrix[i][j]. If the distance has not yet been calculated, it's equal to sys.maxsize.
+    :type adjacency_matrix: list[list[int]]
+    :return: the adjacency matrix with all distances derived (except the distances between (v, v)).
+    :rtype: list[list[int]]
+    """
     for k in range(len(adjacency_matrix)):
         for i in range(len(adjacency_matrix)):
             for j in range(len(adjacency_matrix)):

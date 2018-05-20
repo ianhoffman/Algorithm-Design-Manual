@@ -1,8 +1,17 @@
-"""A simple implementation of Prim's algorithm."""
 import sys
 
 
 def prim(g, start):
+    """A simple implementation of prim's algorithm for finding the minimum spanning tree of a graph, copied (for the
+    most part) from Skiena's implementation in The Algorithm Design Manual.
+
+    :param g: the graph
+    :type g: data_structures.Graph
+    :param start: the start vertex for the MST
+    :type start: int
+    :return: the total weight of the MST
+    :rtype: int
+    """
     intree = [False for _ in range(len(g))]
     distance = [sys.maxsize for _ in range(len(g))]
 
