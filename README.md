@@ -8,3 +8,4 @@ Currently implemented algorithms:
 * Dijkstra's Algorithm for finding the shortest path
 * A generic network flow algorithm for calculating the maximum flow possible in a network
 * A bipartite matching algorithm which uses a network flow algorithm to find the largest possible matching in a graph
+* Backtracking for subsets and permutations
