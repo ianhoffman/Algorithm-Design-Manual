@@ -24,9 +24,8 @@ def prim(g, start):
             if distance.get(y, sys.maxsize) > weight and y not in in_tree:
                 distance[y] = weight
 
-        v = 1
         dist = sys.maxsize
-        for i in range(len(g)):
+        for i in g:
             if i not in in_tree and dist > distance.get(i, sys.maxsize):
                 dist = distance[i]
                 v = i
