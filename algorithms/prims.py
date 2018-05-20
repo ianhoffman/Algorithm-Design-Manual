@@ -2,8 +2,7 @@ import sys
 
 
 def prim(g, start):
-    """A simple implementation of prim's algorithm for finding the minimum spanning tree of a graph, copied (for the
-    most part) from Skiena's implementation in The Algorithm Design Manual.
+    """A simple implementation of prim's algorithm for finding the minimum spanning tree of a graph.
 
     :param g: the graph
     :type g: data_structures.Graph
