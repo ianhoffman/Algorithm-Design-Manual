@@ -1,4 +1,4 @@
-from algorithms.netflow import netflow
+from algorithms.graphs.netflow import netflow
 
 
 def bipartite_match(R):

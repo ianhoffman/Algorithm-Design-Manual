@@ -1,13 +1,13 @@
 import sys
 import unittest
 
-from algorithms import bfs
-from algorithms import bipartite_match
-from algorithms import dijkstra
-from algorithms import floyd
-from algorithms import kruskal
-from algorithms import netflow
-from algorithms import prim
+from algorithms.graphs import bfs
+from algorithms.graphs import bipartite_match
+from algorithms.graphs import dijkstra
+from algorithms.graphs import floyd
+from algorithms.graphs import kruskal
+from algorithms.graphs import netflow
+from algorithms.graphs import prim
 
 from data_structures import Graph
 from data_structures import ResidualFlowGraph

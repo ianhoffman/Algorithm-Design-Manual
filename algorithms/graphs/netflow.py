@@ -1,4 +1,4 @@
-from algorithms import bfs
+from algorithms.graphs import bfs
 
 
 def netflow(R, source, sink):
