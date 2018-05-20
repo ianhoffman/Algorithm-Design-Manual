@@ -14,8 +14,10 @@ class SetUnion:
     def find(self, x):
         """Find the component for a given element.
 
-        :param x:
-        :return:
+        :param x: the element
+        :type x: Any
+        :return: the component the element is in
+        :rtype: Any
         """
         component = self.components[x]
         if component == x:
@@ -24,6 +26,13 @@ class SetUnion:
             return self.find(component)
 
     def merge(self, x, y):
+        """Merge to components such that the smaller component becomes part of the larger one.
+
+        :param x: an element in the first component
+        :type x: Any
+        :param y: an element in the second component
+        :type y: Any
+        """
         component_x = self.find(x)
         component_y = self.find(y)
 
@@ -36,5 +45,14 @@ class SetUnion:
                 self.components[component_x] = component_y
 
     def same_component(self, x, y):
+        """Whether two elements are in the same component.
+
+        :param x: an element in a component
+        :type x: Any
+        :param y: an element in a component
+        :type y: Any
+        :return: Whether the elements are in the same component
+        :rtype: bool
+        """
         return self.find(x) == self.find(y)
 
