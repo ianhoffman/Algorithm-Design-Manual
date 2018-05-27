@@ -11,3 +11,4 @@ Currently implemented algorithms:
 * Backtracking for subsets and permutations
 * A brute-force recursive partition-optimization routine
 * Matrix-based edit distance
+* Translations into 3SAT for any satisfiability instance
