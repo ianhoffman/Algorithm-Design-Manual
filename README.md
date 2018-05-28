@@ -22,4 +22,7 @@ Algorithms currently implemented:
 * Translations into 3SAT for any satisfiability instance
 * *is_satisfiable*: Whether a given set of clauses *C* over a set of variables *V* can be satisfied via some truth 
 assignment of each variable *v<sub>i</sub>*.
+* *set_cover*: Whether a set cover for a set *X* can be constructed from *k* subsets chosen from a family of subsets 
+*F*.
 * *vertex_cover_to_set*: Solve a vertex cover instance by converting it to a satisfiability instance.
+* *vertex_cover_to_set_cover*: Prove that set cover is NP-complete with a reduction from vertex cover.
