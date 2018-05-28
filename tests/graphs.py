@@ -5,6 +5,7 @@ from algorithms.graphs import bfs
 from algorithms.graphs import bipartite_match
 from algorithms.graphs import dijkstra
 from algorithms.graphs import floyd
+from algorithms.graphs import hamiltonian_cycle
 from algorithms.graphs import kruskal
 from algorithms.graphs import netflow
 from algorithms.graphs import prim
@@ -74,6 +75,48 @@ class GraphTestCase(unittest.TestCase):
                 [10,    9,      3,      7,      2,      None,   2   ],
                 [12,    11,     5,      9,      4,      2,      None],
             ]
+        )
+
+    def test_hamiltonian_cycle(self):
+        self.assertTrue(
+            hamiltonian_cycle(
+                {1, 2, 3},
+                {
+                    (1, 2), (1, 3),
+                    (2, 1), (2, 3),
+                    (3, 1), (3, 2)
+                }
+            )
+        )
+
+        self.assertTrue(
+            hamiltonian_cycle(
+                {1, 2, 3, 4, 5, 6, 7},
+                {
+                    (1, 2), (1, 4),
+                    (2, 1), (2, 5), (2, 3),
+                    (3, 2), (3, 5), (3, 6), (3, 4),
+                    (4, 1), (4, 3), (4, 6),
+                    (5, 2), (5, 3), (5, 7),
+                    (6, 3), (6, 4), (6, 7),
+                    (7, 5), (7, 6)
+                }
+            )
+        )
+
+        self.assertFalse(
+            hamiltonian_cycle(
+                {1, 2, 3, 4, 5, 6, 7},
+                {
+                    (1, 2), (1, 4),
+                    (2, 1), (2, 5), (2, 3),
+                    (3, 2), (3, 7), (3, 4),
+                    (4, 1), (4, 3), (4, 6),
+                    (5, 2), (5, 7),
+                    (6, 4), (6, 7),
+                    (7, 5), (7, 3), (7, 6)
+                }
+            )
         )
 
     def test_kruskal(self):
