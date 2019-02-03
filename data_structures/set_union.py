@@ -1,3 +1,6 @@
+from itertools import zip_longest
+
+
 class SetUnion:
     """A data structure which allows efficient merging and finding of components."""
 
@@ -8,8 +11,8 @@ class SetUnion:
             component, named for itself.)
         :type iterable: Iterable
         """
-        self.components = list(iterable)
-        self.size = [1 for _ in range(len(iterable))]
+        self.components = dict(zip(iterable, iterable))
+        self.component_sizes = dict(zip_longest(iterable, [], fillvalue=0))
 
     def find(self, x):
         """Find the component for a given element.
@@ -37,11 +40,11 @@ class SetUnion:
         component_y = self.find(y)
 
         if component_x != component_y:
-            if self.size[component_x] >= self.size[component_y]:
-                self.size[component_x] += self.size[component_y]
+            if self.component_sizes[component_x] >= self.component_sizes[component_y]:
+                self.component_sizes[component_x] += self.component_sizes[component_y]
                 self.components[component_y] = component_x
             else:
-                self.size[component_y] += self.size[component_x]
+                self.component_sizes[component_y] += self.component_sizes[component_x]
                 self.components[component_x] = component_y
 
     def same_component(self, x, y):
@@ -55,4 +58,3 @@ class SetUnion:
         :rtype: bool
         """
         return self.find(x) == self.find(y)
-
