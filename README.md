@@ -18,6 +18,7 @@ Algorithms currently implemented:
 ##### Dynamic Programming
 * A brute-force recursive partition-optimization routine.
 * Matrix-based edit distance.
+* Matrix-based integer partition.
 
 ##### Reductions
 * *is_satisfiable*: Whether a given set of clauses *C* over a set of variables *V* can be satisfied via some truth 

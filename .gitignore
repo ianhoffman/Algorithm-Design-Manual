@@ -2,3 +2,4 @@ venv
 .idea
 *.pyc
 .mypy_cache
+.venv

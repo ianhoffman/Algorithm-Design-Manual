@@ -1,6 +1,7 @@
 import unittest
 
 from algorithms.dynamic_programming import edit_distance
+from algorithms.dynamic_programming import integer_partition
 from algorithms.dynamic_programming import minimum_weight_partition
 
 
@@ -34,6 +35,12 @@ class DynamicProgrammingTestCase(unittest.TestCase):
         Y = 'Sunday'
         self.assertEqual(edit_distance(X, Y), 3)
 
+    def test_integer_partition(self):
+        self.assertEqual(integer_partition(0), 1)
+        self.assertEqual(integer_partition(4), 5)
+        self.assertEqual(integer_partition(8), 22)
+        self.assertEqual(integer_partition(30), 5604)
+
     def test_minimum_weight_partition(self):
         A = [9, 1, 7, 3, 4, 10, 8, 1, 1, 8]
         self.assertEqual(minimum_weight_partition(A, 0), 52)
@@ -42,4 +49,3 @@ class DynamicProgrammingTestCase(unittest.TestCase):
         self.assertEqual(minimum_weight_partition(A, 3), 17)
         self.assertEqual(minimum_weight_partition(A, 4), 14)
         self.assertEqual(minimum_weight_partition(A, 5), 10)  # Ten is smallest possible
-
